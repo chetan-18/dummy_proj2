@@ -17,15 +17,12 @@ class ArticlesController < ApplicationController
 
     def edit 
         # @article = Article.find(params[:id])  # ii will find article of specific index and shows to page
+        @article.user = User.first 
     end
 
     def create 
-        # render plain: params[:article]  #will show params in hash format after submiting articles/new  webpage 
-        # # like {"title"=>"test title ", "description"=>"description of test title"} can b use instead of byebug to check result
-        # render plain: @article  # gives article obj and can use @article.inspect for more details         
-        # redirect_to article_path(@article)  # article is prefix of articles/:id route, _path is added to prefix
-                        #         @article id will be added to articles/:id route path
         @article = Article.new(article_params)  # article_pramas -> private method to reduce redundancy
+        @article.user = User.first    
         if @article.save 
             flash[:notice] = "Article is saved successfully"
             redirect_to @article  # goes to  articles/:id - it is another way of returning to route 
