@@ -1,0 +1,9 @@
+<h3> Showing Article Information</h3>   
+
+<p> <strong>Title: </strong><%= @article.title%> </p>
+<p> <strong>Description: </strong><%= @article.description%> </p>
+
+<p><%= link_to "Edit Article", edit_article_path%> |
+<%= link_to "Delete Article", article_path, method: :delete, data: {confirm: "Are you sure"}%> |
+<%= link_to "Return to Articles Listing", articles_path%>
+</p>
