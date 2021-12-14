@@ -2,3 +2,8 @@
 <%= @user.username%>-->
 
 <h1 class="text-center mt-4"> <%= @user.username %>'s profile </h1>
+
+<h3 class="text-center mt-4">Name: <%= @user.username %></h3>
+<h3 class="text-center mt-4">Email: <%= @user.email %></h3>
+<h3 class="text-center mt-4">Created : <%= time_ago_in_words(@user.created_at)%></h3>
+
