@@ -18,7 +18,10 @@
                 <%= link_to "Create Aticle", new_article_path(@article), class: "nav-link"%>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <%= link_to "Log in", login_path, class: "nav-link"%>
+            </li>
+            <li class="nav-item">
+                <%= link_to "Logout", logout_path, class: "nav-link", method: :delete%>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

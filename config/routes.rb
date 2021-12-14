@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   # post 'users', to: 'users#create' # users will have all restful routes as well, for that resources is used
   resources :users, except: [:new]  # we get all routes except new
 
+  get 'login', to: 'sessions#new'  # won't use resources because login does not hit database 
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 end
