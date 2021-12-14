@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Adding secure password
 
-Things you may want to cover:
+3 step process to add auth system functionality from the back-end.
 
-* Ruby version
+Step 1) Add bcrypt gem:
 
-* System dependencies
+In the Gemfile uncomment the line that lists the gem:
 
-* Configuration
+gem 'bcrypt', '~> 3.1.7'
 
-* Database creation
+Then run $ bundle install to install the gem in your app.
 
-* Database initialization
+Step 2) Add has_secure_password to your user model. Add the line below in your user.rb model file:
 
-* How to run the test suite
+has_secure_password
 
-* Services (job queues, cache servers, search engines, etc.)
+Step 3) Create a migration file to add the password_digest column to the users table.
 
-* Deployment instructions
+$ rails generate migration add_password_digest_to_users
+Then pull up the migration file and fill in the column details within the def change method:
 
-* ...
+add_column :users, :password_digest, :string
+Save the file and run $ rails db:migrate to make the change to the table
+
+You can test out the functionality from the console by adding passwords to a couple of your existing users and verifying them using the authenticate method. A sample progression of commands from the console could be like below:
+
+user = User.last
+user.password = "password123"
+user.save
+The commands above will add the hashed version (with salt) of the string "password123" to the user's record.
+
+Then you can authenticate and test the password for the user like below:
+
+user = User.last # (or User.find(enter id of user here))
+user.authenticate("password123") # This, being the correct password will return the user object
+user.authenticate("enterincorrectpassword") # This, being an incor
