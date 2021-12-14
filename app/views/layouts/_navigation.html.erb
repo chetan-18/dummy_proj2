@@ -17,12 +17,22 @@
                 <!--<a class="nav-link" href="#">Features</a>-->
                 <%= link_to "Create Aticle", new_article_path(@article), class: "nav-link"%>
             </li>
-            <li class="nav-item">
-                <%= link_to "Log in", login_path, class: "nav-link"%>
-            </li>
-            <li class="nav-item">
-                <%= link_to "Logout", logout_path, class: "nav-link", method: :delete%>
-            </li>
+            
+            <%if logged_in?%>
+                <li class="nav-item">
+                    <%= link_to current_user.username, user_path(current_user), class: "nav-link"%>
+                </li>
+                <li class="nav-item">
+                    <%= link_to "Logout", logout_path, class: "nav-link", method: :delete%>
+                </li>
+            <%else%>
+                <li class="nav-item">
+                    <%= link_to "Log in", login_path, class: "nav-link"%>
+                </li>
+                <li class="nav-item">
+                    <%= link_to "Sign up", signup_path, class: "nav-link"%>
+                </li>
+            <%end%>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dropdown link

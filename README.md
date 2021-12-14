@@ -1,19 +1,10 @@
 # README
 
-Login form
+Authentication and helper method
+- Added current_user and logged_in? helper methods.
 
-route for login will not be resources, because session for login won't hit database
-we won't have routes for restapi, so we have to manually create the routes
-1. creating routes
-routs.rb
-    get 'login', to: 'session#new'
+- Modified the navigation partial and utilized these methods to display links based on logged in state.
 
-2. creating session controller and actions
+- Modified the users controller create action so users' are logged in once they sign-up.
 
-
-Create and destroy user sessions
-
-we will log the user in or authenticate base on which user logged
-we will utilize session to represent login state
-with entering log in credential it is varified base on the users table information
-
+- Added set_user method and used it as before_action for show, edit and update actions in users controller.

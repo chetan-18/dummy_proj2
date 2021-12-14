@@ -1,7 +1,8 @@
 class UsersController < ApplicationController 
+    before_action :set_user, only: [:show, :edit, :update]
 
     def show 
-        @user = User.find(params[:id])
+        # @user = User.find(params[:id])
     end 
 
     def index 
@@ -16,13 +17,13 @@ class UsersController < ApplicationController
     # create action post the new data to new.html.erb with POST 
 
     def edit 
-        @user = User.find(params[:id])     # this will find user based on id
+        # @user = User.find(params[:id])     # this will find user based on id
     end 
     # edit and update action work on edit.html.erb
     # edit action gets the required parameters using GET
     # update action post the updated datat to edit.html.erb with POST
     def update 
-        @user = User.find(params[:id])
+        # @user = User.find(params[:id])
         if @user.update(user_params)
             flash[:notice] = "Your account information was successfully updated"
             redirect_to articles_path
@@ -35,6 +36,7 @@ class UsersController < ApplicationController
         # byebug
         @user = User.new(user_params)
         if @user.save
+            session[:user_id] = @user.id  # as soon as user is created, his session makes to him stay signin
             flash[:notice] = "Welcome to project,#{@user.username} you have successfully signed up"
             redirect_to articles_path
         else  
@@ -47,5 +49,9 @@ class UsersController < ApplicationController
     private 
     def user_params 
         params.require(:user).permit(:username, :email, :password)
+    end
+
+    def set_user 
+        @user = User.find(params[:id])
     end
 end 
