@@ -1,10 +1,17 @@
 # README
+Contrlller method as helper method
 
-Authentication and helper method
-- Added current_user and logged_in? helper methods.
+- Moved the current_user and logged_in? authentication methods from application helper to application controller and declared them as helper methods so they can be used in views as well.
 
-- Modified the navigation partial and utilized these methods to display links based on logged in state.
+- Updated the create action in articles controller so the logged in user is associated with the article being created instead of hardcoding the user.
 
-- Modified the users controller create action so users' are logged in once they sign-up.
+- Updated pages controller home action (root route) to redirect to articles index page if users are logged in.
 
-- Added set_user method and used it as before_action for show, edit and update actions in users controller.
+
+Restricting actions from UI
+
+- to check whether user is logged in and who the user is that logged in
+- in articles listing index edit, delete option should only availabe to user who have created them
+
+- Added logged in and current user == article user based restrictions to articles/_article.html.erb partial, articles/show.html.erb, users/index.html.erb and users/show.html.erb.
+
