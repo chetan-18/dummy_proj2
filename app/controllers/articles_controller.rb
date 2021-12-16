@@ -1,5 +1,8 @@
 class ArticlesController < ApplicationController 
+    # all before action must follow order to operate
     before_action :set_article, only: [:show, :edit, :update, :destroy]
+    before_action :require_user, except: [:show, :index] # requires useer for certain actions
+    before_action :require_same_user, only: [:edit, :update, :destroy] # to check current user wrt article user for edit 
     # it is helper which will run set_aricle method before we do any action mentioned in only
     # if only is not used it will apply to every actions which we don't want
     def show
@@ -22,7 +25,7 @@ class ArticlesController < ApplicationController
 
     def create 
         @article = Article.new(article_params)  # article_pramas -> private method to reduce redundancy
-        @article.user = User.first    
+        @article.user = current_user  # current_user is a helper method which gives current signed in user   
         if @article.save 
             flash[:notice] = "Article is saved successfully"
             redirect_to @article  # goes to  articles/:id - it is another way of returning to route 
@@ -58,5 +61,12 @@ class ArticlesController < ApplicationController
     def article_params
         params.require(:article).permit(:title, :description)
     end
+
+    def require_same_user
+        if cuerrent_user != @article.user 
+            flash[:alert] = "You can only edit or delete your own aticle"
+            redirect_to @article 
+        end
+    end 
     # private doesn't need end block
 end 

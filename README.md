@@ -1,17 +1,20 @@
 # README
-Contrlller method as helper method
 
-- Moved the current_user and logged_in? authentication methods from application helper to application controller and declared them as helper methods so they can be used in views as well.
+Restricting action at controller level
+Restrict at articles controller
+- Added require user method in application controller.
 
-- Updated the create action in articles controller so the logged in user is associated with the article being created instead of hardcoding the user.
+- Added require same user private method in articles controller.
 
-- Updated pages controller home action (root route) to redirect to articles index page if users are logged in.
+- Used the two methods defined above as before_action methods in a few actions to restrict activities in the articles controller.
+
+REstrict at users controller
 
 
-Restricting actions from UI
-
-- to check whether user is logged in and who the user is that logged in
-- in articles listing index edit, delete option should only availabe to user who have created them
-
-- Added logged in and current user == article user based restrictions to articles/_article.html.erb partial, articles/show.html.erb, users/index.html.erb and users/show.html.erb.
+DELETE User
+- with the deletion of user it's associated articles needs to be deleted
+for that in user model
+class User < ApplicationRecord 
+    has_many :articles, dependent: :destroy 
+end 
 

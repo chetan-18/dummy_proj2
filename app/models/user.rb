@@ -1,6 +1,6 @@
 class User < ApplicationRecord 
     before_save {self.email = email.downcase}       # here self refers to current object
-    has_many :articles
+    has_many :articles, dependent: :destroy   # any user associated will be deleted
     validates :username, presence: true,
                          uniqueness: {case_sensitive: false},
                          length: {minimum: 4, maximum: 15}

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController 
-    before_action :set_user, only: [:show, :edit, :update]
+    before_action :set_user, only: [:show, :edit, :update, :destroy]
+    before_action :require_user, only: [:edit, :update]
+    before_action :require_same_user, only: [:edit, :update, :destroy]
 
     def show 
         # @user = User.find(params[:id])
@@ -23,7 +25,7 @@ class UsersController < ApplicationController
     # edit action gets the required parameters using GET
     # update action post the updated datat to edit.html.erb with POST
     def update 
-        # @user = User.find(params[:id])
+        # @user = User.find(params[:id])  # set_user method used for finding user
         if @user.update(user_params)
             flash[:notice] = "Your account information was successfully updated"
             redirect_to articles_path
@@ -44,7 +46,12 @@ class UsersController < ApplicationController
         end 
     end
     
-
+    def destroy
+        # @user = User.find(params[:id])  # set_user private method will give this user
+        @user.destroy 
+        session[:user_id] = nil 
+        flash[:notice] = "User account and all associated articles are successfully deleted"
+    end 
 
     private 
     def user_params 
@@ -54,4 +61,11 @@ class UsersController < ApplicationController
     def set_user 
         @user = User.find(params[:id])
     end
+
+    def require_same_user
+        if current_user != @user 
+            flash[:alert] = "You can only edit or delete your own aticle"
+            redirect_to @user
+        end
+    end 
 end 
