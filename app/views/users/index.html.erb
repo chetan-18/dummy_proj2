@@ -9,8 +9,8 @@
       <th> Id</th>
       <th>Name</th>
       <th>Email</th>
-     <!-- <th>Joined</th> 
-      <th colspan="3"></th> -->
+     <th>Joined</th> 
+      <th colspan="3"></th> 
     </tr>
   </thead>
 
@@ -18,13 +18,16 @@
     <% @users.each do |u| %>
       <tr>
         <td><%= u.id%></td>
-        <td><%= link_to u.username, u %></td>  <%#it will give link to user show page#%>
+        <td><%= link_to u.username, u %></td>  <%#it will give link to user show page, #%>
         <td><%= u.email %></td>
-    <!--    <td><%= time_ago_in_words(u.created_at) %></td>  
+        <td><%= time_ago_in_words(u.created_at) %></td>  
         <td><%= link_to 'Show', u %></td>
-        <td><%= link_to 'Edit', edit_user_path(u) %></td>
-        <td><%= link_to 'Destroy'%></td> -->
+        <% if u == current_user %>    <%# if user is current user it can edit and delete only his account #%>
+          <td><%= link_to 'Edit', edit_user_path(u) %></td>
+          <td><%= link_to 'Destroy'%></td> 
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+

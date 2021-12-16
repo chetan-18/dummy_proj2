@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     before_action :require_same_user, only: [:edit, :update, :destroy]
 
     def show 
-        # @user = User.find(params[:id])
+        # @user = User.find(params[:id])  # set_user 
     end 
 
     def index 
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     def destroy
         # @user = User.find(params[:id])  # set_user private method will give this user
         @user.destroy 
-        session[:user_id] = nil 
+        session[:user_id] = nil # nil, because session work on current_user if we destroy current_user it will through an error
         flash[:notice] = "User account and all associated articles are successfully deleted"
     end 
 
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
     end
 
-    def require_same_user
+    def require_same_user   # user can apply mentioned actions only on himself not on other user
         if current_user != @user 
             flash[:alert] = "You can only edit or delete your own aticle"
             redirect_to @user

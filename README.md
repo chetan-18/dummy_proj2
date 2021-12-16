@@ -1,20 +1,18 @@
 # README
 
-Restricting action at controller level
-Restrict at articles controller
-- Added require user method in application controller.
+Adding Admin functionality
 
-- Added require same user private method in articles controller.
+Permission functionality
+    Based on the permissions given users can be divided into admin, moderator and regular user
+admin -  has the all the permissions
+moderator - moderate permission
+regular user -  have only regular permission not main permission
 
-- Used the two methods defined above as before_action methods in a few actions to restrict activities in the articles controller.
+We can add admin functionality 
+1 By giving string value to admin column eg. "admin", 'moderator'
+2 adding admin column which has boolean value in users table
 
-REstrict at users controller
 
-
-DELETE User
-- with the deletion of user it's associated articles needs to be deleted
-for that in user model
-class User < ApplicationRecord 
-    has_many :articles, dependent: :destroy 
-end 
+Admin access thruough views and controller
+    Here, we will define functionality such that if the user logged in is admin it will show admin with username. And also admin has all view, edit and delete functioanlity of all users' articles
 

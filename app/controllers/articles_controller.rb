@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController 
-    # all before action must follow order to operate
+    # all before action methods must follow certain order depending on flow to work properly
     before_action :set_article, only: [:show, :edit, :update, :destroy]
-    before_action :require_user, except: [:show, :index] # requires useer for certain actions
+    before_action :require_user, except: [:show, :index] # requires user for certain actions
     before_action :require_same_user, only: [:edit, :update, :destroy] # to check current user wrt article user for edit 
     # it is helper which will run set_aricle method before we do any action mentioned in only
     # if only is not used it will apply to every actions which we don't want
@@ -17,10 +17,13 @@ class ArticlesController < ApplicationController
     def new
         @article = Article.new
     end 
+    # new and create action both acts upon new.html.erb
+    # new action gives page new.html.erb with GET
+    # create action post the new data to new.html.erb with POST 
 
     def edit 
-        # @article = Article.find(params[:id])  # ii will find article of specific index and shows to page
-        @article.user = User.first 
+        # @article = Article.find(params[:id])  # it will find article of specific index and shows to page
+        @article.user = User.first  
     end
 
     def create 
@@ -34,6 +37,9 @@ class ArticlesController < ApplicationController
         end
     end
     
+    # update and edit both acts upon edit.html
+    # edit action gives page edit.html.erb with GET
+    # update actiion post data to edit.html.erb with POST
     def update 
         # byebug
         # @article = Article.find(params[:id])
@@ -62,8 +68,8 @@ class ArticlesController < ApplicationController
         params.require(:article).permit(:title, :description)
     end
 
-    def require_same_user
-        if cuerrent_user != @article.user 
+    def require_same_user   # when current user is not article's user and current is not admin
+        if current_user != @article.user && !current_user.admin?
             flash[:alert] = "You can only edit or delete your own aticle"
             redirect_to @article 
         end
