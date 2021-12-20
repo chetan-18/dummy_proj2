@@ -13,6 +13,11 @@ We can add admin functionality
 2 adding admin column which has boolean value in users table
 
 
+
 Admin access thruough views and controller
-    Here, we will define functionality such that if the user logged in is admin it will show admin with username. And also admin has all view, edit and delete functioanlity of all users' articles
+
+Here, we will define functionality such that if the user logged in is admin it will show admin with username. And also admin has all view, edit and delete functioanlity of all users' articles(which was restricted to only article's user previously)
+
+Admin able to delete other users
+
 
