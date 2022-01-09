@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'  # won't use resources because login does not hit database 
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
+
+  resources :categories, except: [:destroy]
 end
